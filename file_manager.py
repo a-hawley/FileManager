@@ -1,4 +1,5 @@
 from curses import window
+from re import L
 from tkinter import *
 import shutil
 import os
@@ -9,11 +10,12 @@ from tkinter import messagebox as mb
 
 # Opens file directory GUI, path is stored.
 def open_window():
+
     open = easygui.fileopenbox()
     return open
 
 
-# Open functionality
+# Open function
 def open_file():
 
     # Calls GUI and stores path.
@@ -27,7 +29,7 @@ def open_file():
         mb.showinfo('confirmation', "File not found!")
 
 
-# Copy/paste functionality
+# Copy/paste function
 def copy_file():
 
     source = open_window()
@@ -42,8 +44,9 @@ def copy_file():
     mb.showinfo('confirmation', 'File Copied!')
 
 
-# Delete functionality
+# Delete function
 def delete_file():
+
     del_file = open_window()
 
     # Checks file validity, deletes if valid.
@@ -53,7 +56,7 @@ def delete_file():
         mb.showinfo('confirmation', "File not found!")
 
 
-# Rename functionality
+# Rename function
 def rename_file():
 
     orig_file = open_window()
@@ -70,6 +73,53 @@ def rename_file():
     path2 = os.path.join(path, rename+extension)
     print(path2)
 
-    # Actual renaming function.
     os.rename(orig_file, path2)
     mb.showinfo('confirmation', "File has been renamed...")
+
+
+# Move file fuctional
+def move_file():
+
+    file = open_window()
+    destination = filedialog.askdirectory()
+
+    # Check for valid destination.
+    if file == destination:
+        mb.showinfo('confirmation', 'Cannot move to same address...')
+    else:
+        # Shutil utilizes os.rename, so if the import is a problem, utizile os function.
+        shutil.move(file, destination)
+        mb.showinfo('confirmation', 'File successfully moved!')
+
+
+# Create folder function
+def create_folder():
+
+    folder_path = filedialog.askdirectory()
+    print("Name the new folder...")
+    folder_name = input('')
+
+    path = os.path.join(folder_path, folder_name)
+    os.mkdir(path)
+    mb.showinfo('confirmation', 'Folder created!')
+
+
+# Delete folder function
+def del_folder():
+
+    folder_path: filedialog.askdirectory()
+    os.rmdir(folder_path)
+    mb.showinfo('confirmation', 'Folder deleted!')
+
+
+# Lists all files in folder
+def file_list():
+
+    folder_path = filedialog.askdirectory()
+    list = sorted(os.listdir(folder_path))
+
+    print(f'{folder_path} contains the files:')
+    i = 0
+    while(i < len(list)):
+        print(list[i]+'\n')
+        i += 1
