@@ -1,5 +1,6 @@
 from curses import window
 from re import L
+from struct import pack
 from tkinter import *
 import shutil
 import os
@@ -123,3 +124,41 @@ def file_list():
     while(i < len(list)):
         print(list[i]+'\n')
         i += 1
+
+#############################################
+
+# Tkinter side
+
+
+root = Tk()
+
+# Create canvas (or drawing tool)
+
+root.title('Hawley File Manager')
+
+# Create label
+Label(root, text="Hawley File Manager", font=(
+    "Helvetica", 16), fg="red", bg='white').grid(row=5, column=2)
+
+
+# Create buttons and assign their function
+Button(root, text="Open File",
+       command=open_file).grid(row=15, column=2)
+Button(root, text="Copy File",
+       command=copy_file).grid(row=25, column=2)
+Button(root, text="Delete File",
+       command=delete_file).grid(row=35, column=2)
+Button(root, text="Rename File",
+       command=rename_file).grid(row=45, column=2)
+Button(root, text="Move File",
+       command=move_file).grid(row=55, column=2)
+Button(root, text="Make Folder",
+       command=create_folder).grid(row=75, column=2)
+Button(root, text="Remove Folder",
+       command=del_folder).grid(row=65, column=2)
+Button(root, text="List all Files in Directory",
+       command=file_list).grid(row=85, column=2)
+
+# Run Tkinter
+
+root.mainloop()
