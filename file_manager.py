@@ -40,3 +40,36 @@ def copy_file():
 
     # Creates message box to alert success.
     mb.showinfo('confirmation', 'File Copied!')
+
+
+# Delete functionality
+def delete_file():
+    del_file = open_window()
+
+    # Checks file validity, deletes if valid.
+    if os.path.exists(del_file):
+        os.remove(del_file)
+    else:
+        mb.showinfo('confirmation', "File not found!")
+
+
+# Rename functionality
+def rename_file():
+
+    orig_file = open_window()
+
+    # Saves directory path.
+    path = os.path.dirname(orig_file)
+
+    # Splits extension (.py) and root (file_manager) so the extension can be kept the same.
+    extension = os.path.splitext(orig_file)[1]
+    print("Enter a new name for the file: ")
+    rename = input('')
+
+    # Joins the previously split extension and root.
+    path2 = os.path.join(path, rename+extension)
+    print(path2)
+
+    # Actual renaming function.
+    os.rename(orig_file, path2)
+    mb.showinfo('confirmation', "File has been renamed...")
